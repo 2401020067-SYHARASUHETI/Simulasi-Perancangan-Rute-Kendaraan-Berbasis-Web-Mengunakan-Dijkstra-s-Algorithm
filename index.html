@@ -1,1 +1,129 @@
-DOCTYPE HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Smart City KOTMOR — Dijkstra</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CANVAS UTAMA -->
+<canvas id="gameCanvas"></canvas>
+
+<!-- UI -->
+<div id="topBar">
+  <div class="logo">
+    <span style="font-size:18px;">🏙️</span>
+    <div><div class="logoH">SMART CITY</div><div class="logoS">KOTMOR — DIJKSTRA</div></div>
+  </div>
+  <div class="tStat"><div class="tLbl">Speed</div><div class="tVal" id="tvSpd">—</div></div>
+  <div class="tStat"><div class="tLbl">Cost</div><div class="tVal" id="tvCost">—</div></div>
+  <div class="tStat"><div class="tLbl">Nodes</div><div class="tVal" id="tvNds">—</div></div>
+  <div class="tStat"><div class="tLbl">Zoom</div><div class="tVal" id="tvZm">—</div></div>
+  <div class="tSp"></div>
+  <div class="tStat" style="background:rgba(255,50,50,.07);border-color:rgba(255,50,50,.22);">
+    <div class="tLbl" style="color:#f88;">Status</div>
+    <div class="tVal" id="tvSt" style="color:#fa0;font-size:10px;">READY</div>
+  </div>
+</div>
+
+<div id="lPanel">
+  <div class="card">
+    <div class="cardT">NAVIGATION ROUTE</div>
+    <div class="rItem"><div class="rDot s"></div>
+      <div><div class="rLbl">START</div><div class="rName" id="srcNm">Pilih lokasi…</div></div>
+    </div>
+    <div class="rArrow">▼ Dijkstra Shortest Path ▼</div>
+    <div class="rItem"><div class="rDot d"></div>
+      <div><div class="rLbl">TUJUAN</div><div class="rName" id="dstNm">Pilih lokasi…</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="cardT">PILIH LOKASI</div>
+    <div class="locHint">
+      <span style="color:#ffd700;">●</span> 1× KLIK = START &nbsp;
+      <span style="color:#ff3a3a;">●</span> 2× KLIK = TUJUAN
+    </div>
+    <div class="locGrid" id="locGrid"></div>
+  </div>
+  <div class="card">
+    <div class="cardT">🎲 ACAK</div>
+    <div style="display:flex;gap:8px;margin-top:6px;">
+      <button onclick="document.getElementById('bRnd').click()"
+        style="flex:1;padding:10px 0;background:rgba(0,220,130,.15);border:1px solid rgba(0,220,130,.4);
+               color:#00ee88;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;">
+        ⟳ Acak Posisi
+      </button>
+      <button onclick="document.getElementById('bAcakMap').click()"
+        style="flex:1;padding:10px 0;background:rgba(0,160,255,.15);border:1px solid rgba(0,160,255,.4);
+               color:#00ccff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;">
+        🗺 Acak Maps
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="cardT">DIJKSTRA ENGINE</div>
+    <div class="aRow"><span class="aKey">ALGORITHM</span><span class="badge">Dijkstra SSSP</span></div>
+    <div class="aRow"><span class="aKey">STATUS</span><span class="aVal" id="algSt">IDLE</span></div>
+    <div class="aRow"><span class="aKey">VISITED</span><span class="aVal" id="algVis">—</span></div>
+    <div class="aRow"><span class="aKey">PATH LEN</span><span class="aVal" id="algLen">—</span></div>
+    <div class="aRow"><span class="akey">DISTANCE</span><span class="aVal" id="algDst">—</span></div>
+    <div id="pProg"><div id="pBar"></div></div>
+    <div class="nList" id="nList"></div>
+  </div>
+</div>
+
+<div id="npcPanel">
+  <div id="npcHdr"><div class="npcT">NPC VEHICLES</div><div id="npcTgl">▼</div></div>
+  <div id="npcBody"></div>
+</div>
+
+<div id="sideCtrl">
+  <div class="cBtn" id="bPause">⏸</div>
+  <div class="cBtn star" id="bStar">★</div>
+  <div class="cSep"></div>
+  <div class="cBtn" id="bZI">+</div>
+  <div class="cBtn" id="bZO">−</div>
+  <div class="cBtn" id="bRes">⊙</div>
+  <div class="cSep"></div>
+  <div class="cBtn" id="bFol">▶</div>
+  <div class="cBtn" id="bRnd" title="Acak Posisi Start & Tujuan">⟳</div>
+  <div class="cBtn" id="bAcakMap" title="Acak Peta Baru">🗺</div>
+</div>
+
+<div id="mm">
+  <canvas id="mmC" width="155" height="155"></canvas>
+  <div id="mmL">MINIMAP</div>
+  <div id="mmV"></div>
+</div>
+
+<div id="btmBar">
+  <div class="sChip"><div class="sd g"></div><span class="st" id="stPath">Belum ada rute</span></div>
+  <div class="sChip"><div class="sd b"></div><span class="st">NPC VEHICLES: 8</span></div>
+  <div class="sChip"><div class="sd o"></div><span class="st">1×KLIK=START | 2×KLIK=TUJUAN</span></div>
+</div>
+
+<div id="help">
+  <div class="hc"><span class="hk">DRAG</span>Pan</div>
+  <div class="hc"><span class="hk">SCROLL</span>Zoom</div>
+  <div class="hc"><span class="hk">1×</span>Start</div>
+  <div class="hc"><span class="hk">2×</span>Tujuan</div>
+  <div class="hc"><span class="hk">⟳</span>Acak</div>
+</div>
+
+<div id="pOverlay">
+  <div class="pBox">
+    <div class="pIco">⏸</div>
+    <div class="pTit">PAUSED</div>
+    <div class="pSub">SMART CITY KOTMOR</div>
+    <div>
+      <div class="pBtn" id="bResume">▶ RESUME</div>
+      <div class="pBtn pBtnO" id="bResumeRnd">⟳ RUTE BARU</div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
