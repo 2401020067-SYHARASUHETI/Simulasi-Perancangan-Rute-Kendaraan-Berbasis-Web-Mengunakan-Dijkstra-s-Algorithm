@@ -7,8 +7,8 @@
 // ============================================================
 //  GRAPH — variabel global dipakai modul lain
 // ============================================================
-let nodes   = [];
-let edges   = [];
+let nodes = [];
+let edges = [];
 let adjList = {};
 
 function addNode(x, y, type = 'road') {
@@ -21,7 +21,7 @@ function addNode(x, y, type = 'road') {
 function addEdge(a, b, noRender = false) {
   if (a == null || b == null || a === b) return;
   const na = nodes[a], nb = nodes[b];
-  const w  = Math.hypot(na.x - nb.x, na.y - nb.y);
+  const w = Math.hypot(na.x - nb.x, na.y - nb.y);
   adjList[a].push({ to: b, w });
   adjList[b].push({ to: a, w });
   edges.push({ a, b, noRender });
@@ -35,7 +35,7 @@ function buildGraph() {
 
   const AV = [200, 440, 680, 920, 1160, 1400, 1640, 1880, 2120, 2360, 2600];
   const ST = [200, 440, 680, 920, 1160, 1400, 1640, 1880, 2120, 2360, 2600];
-  const G  = {};
+  const G = {};
   ST.forEach((y, yi) => {
     G[yi] = {};
     AV.forEach((x, xi) => { G[yi][xi] = addNode(x, y, 'inter'); });
@@ -66,8 +66,8 @@ function buildGraph() {
       if (yi === 5 && xi === 4) return;
       if (yi === 5 && xi === 5) return;
       const blk = (yi === 2 && xi === 3) || (yi === 5 && xi === 7) || (yi === 8 && xi === 4) ||
-                  (yi === 1 && xi === 6) || (yi === 7 && xi === 2) || (yi === 3 && xi === 9) ||
-                  (yi === 9 && xi === 1) || (yi === 4 && xi === 5);
+        (yi === 1 && xi === 6) || (yi === 7 && xi === 2) || (yi === 3 && xi === 9) ||
+        (yi === 9 && xi === 1) || (yi === 4 && xi === 5);
       if (!blk) addEdge(G[yi][xi], G[yi][xi + 1]);
     });
   });
@@ -79,8 +79,8 @@ function buildGraph() {
       if (xi === 5 && yi === 4) return;
       if (xi === 5 && yi === 5) return;
       const blk = (xi === 2 && yi === 1) || (xi === 6 && yi === 4) || (xi === 4 && yi === 7) ||
-                  (xi === 8 && yi === 2) || (xi === 1 && yi === 8) || (xi === 7 && yi === 1) ||
-                  (xi === 3 && yi === 9) || (xi === 9 && yi === 5);
+        (xi === 8 && yi === 2) || (xi === 1 && yi === 8) || (xi === 7 && yi === 1) ||
+        (xi === 3 && yi === 9) || (xi === 9 && yi === 5);
       if (!blk) addEdge(G[yi][xi], G[yi + 1][xi]);
     });
   });
@@ -141,26 +141,26 @@ function sr(s) {
 //  LOKASI LANDMARK
 // ============================================================
 const LOCS = [
-  { id: 'hospital', nm: 'Rumah Sakit',       ico: '🏥', col: '#ff4466', wx: 200,  wy: 200  },
-  { id: 'police',   nm: 'Kantor Polisi',      ico: '🚔', col: '#4477ff', wx: 2600, wy: 2600 },
-  { id: 'school',   nm: 'Sekolah',            ico: '🏫', col: '#ffcc00', wx: 1400, wy: 200  },
-  { id: 'mosque',   nm: 'Masjid',             ico: '🕌', col: '#00cc88', wx: 1400, wy: 1400 },
-  { id: 'market',   nm: 'Pasar',              ico: '🏪', col: '#ff8822', wx: 200,  wy: 1400 },
-  { id: 'taman',    nm: 'Taman Kota',         ico: '🌳', col: '#33dd55', wx: 1400, wy: 680  },
-  { id: 'station',  nm: 'Stasiun KA',         ico: '🚉', col: '#9966ff', wx: 2600, wy: 200  },
-  { id: 'univ',     nm: 'Universitas',        ico: '🎓', col: '#0099ff', wx: 200,  wy: 2600 },
-  { id: 'mall',     nm: 'Mall/Plaza',         ico: '🛍️', col: '#ff44aa', wx: 2600, wy: 1400 },
-  { id: 'bank',     nm: 'Bank',               ico: '🏦', col: '#44ddcc', wx: 680,  wy: 680  },
-  { id: 'airport',  nm: 'Bandara',            ico: '✈️', col: '#66aaff', wx: 2600, wy: 440  },
-  { id: 'hotel',    nm: 'Hotel',              ico: '🏨', col: '#ffaa44', wx: 920,  wy: 2360 },
-  { id: 'rs2',      nm: 'RS Bethesda',        ico: '⚕️', col: '#ff6699', wx: 2360, wy: 680  },
-  { id: 'sport',    nm: 'Lap. Olahraga',      ico: '🏟️', col: '#aadd00', wx: 680,  wy: 2360 },
-  { id: 'museum',   nm: 'Museum',             ico: '🏛️', col: '#ddaa44', wx: 1880, wy: 2360 },
-  { id: 'fire',     nm: 'Pemadam Kebakaran',  ico: '🚒', col: '#ff4400', wx: 2360, wy: 2120 },
-  { id: 'pos',      nm: 'Kantor Pos',         ico: '📮', col: '#ffdd00', wx: 440,  wy: 1640 },
-  { id: 'lib',      nm: 'Perpustakaan',       ico: '📚', col: '#aa66ff', wx: 2120, wy: 200  },
-  { id: 'spbu',     nm: 'SPBU',               ico: '⛽', col: '#44aaff', wx: 920,  wy: 1160 },
-  { id: 'pusk',     nm: 'Puskesmas',          ico: '🏥', col: '#ff6688', wx: 2360, wy: 1640 },
+  { id: 'hospital', nm: 'Rumah Sakit', ico: '🏥', col: '#ff4466', wx: 200, wy: 200 },
+  { id: 'police', nm: 'Kantor Polisi', ico: '🚔', col: '#4477ff', wx: 2600, wy: 2600 },
+  { id: 'school', nm: 'Sekolah', ico: '🏫', col: '#ffcc00', wx: 1400, wy: 200 },
+  { id: 'mosque', nm: 'Masjid', ico: '🕌', col: '#00cc88', wx: 1400, wy: 1400 },
+  { id: 'market', nm: 'Pasar', ico: '🏪', col: '#ff8822', wx: 200, wy: 1400 },
+  { id: 'taman', nm: 'Taman Kota', ico: '🌳', col: '#33dd55', wx: 1400, wy: 680 },
+  { id: 'station', nm: 'Stasiun KA', ico: '🚉', col: '#9966ff', wx: 2600, wy: 200 },
+  { id: 'univ', nm: 'Universitas', ico: '🎓', col: '#0099ff', wx: 200, wy: 2600 },
+  { id: 'mall', nm: 'Mall/Plaza', ico: '🛍️', col: '#ff44aa', wx: 2600, wy: 1400 },
+  { id: 'bank', nm: 'Bank', ico: '🏦', col: '#44ddcc', wx: 680, wy: 680 },
+  { id: 'airport', nm: 'Bandara', ico: '✈️', col: '#66aaff', wx: 2600, wy: 440 },
+  { id: 'hotel', nm: 'Hotel', ico: '🏨', col: '#ffaa44', wx: 920, wy: 2360 },
+  { id: 'rs2', nm: 'RS Bethesda', ico: '⚕️', col: '#ff6699', wx: 2360, wy: 680 },
+  { id: 'sport', nm: 'Lap. Olahraga', ico: '🏟️', col: '#aadd00', wx: 680, wy: 2360 },
+  { id: 'museum', nm: 'Museum', ico: '🏛️', col: '#ddaa44', wx: 1880, wy: 2360 },
+  { id: 'fire', nm: 'Pemadam Kebakaran', ico: '🚒', col: '#ff4400', wx: 2360, wy: 2120 },
+  { id: 'pos', nm: 'Kantor Pos', ico: '📮', col: '#ffdd00', wx: 440, wy: 1640 },
+  { id: 'lib', nm: 'Perpustakaan', ico: '📚', col: '#aa66ff', wx: 2120, wy: 200 },
+  { id: 'spbu', nm: 'SPBU', ico: '⛽', col: '#44aaff', wx: 920, wy: 1160 },
+  { id: 'pusk', nm: 'Puskesmas', ico: '🏥', col: '#ff6688', wx: 2360, wy: 1640 },
 ];
 
 function assignLocNodes() {
@@ -230,7 +230,7 @@ function buildNPCPanel() {
 // ============================================================
 function updateUI(frameCount) {
   document.getElementById('tvSpd').textContent = Math.round(32 + Math.sin(Date.now() * .0012) * 14) + ' km/h';
-  document.getElementById('tvZm').textContent  = cam.zoom.toFixed(2) + '×';
+  document.getElementById('tvZm').textContent = cam.zoom.toFixed(2) + '×';
 
   document.querySelectorAll('.nChip').forEach((c, i) => {
     c.classList.remove('cur', 'vis');
@@ -258,15 +258,15 @@ function setRoute(srcId, dstId, srcName, dstName) {
     document.getElementById('algSt').textContent = 'NO PATH';
     return;
   }
-  currentPath   = path;
-  visitedNodes  = visited;
-  pathAnimT     = 0;
+  currentPath = path;
+  visitedNodes = visited;
+  pathAnimT = 0;
 
-  playerCar.path      = path;
-  playerCar.pathIdx   = 0;
-  playerCar.t         = 0;
+  playerCar.path = path;
+  playerCar.pathIdx = 0;
+  playerCar.t = 0;
   playerCar.destNodeId = dstId;
-  playerCar.trail     = [];
+  playerCar.trail = [];
 
   const startNode = nodes[srcId];
   if (startNode) { playerCar.x = startNode.x; playerCar.y = startNode.y; }
@@ -275,15 +275,15 @@ function setRoute(srcId, dstId, srcName, dstName) {
   document.getElementById('bFol').classList.add('on');
 
   document.getElementById('tvCost').textContent = cost < Infinity ? Math.round(cost) + 'u' : 'N/A';
-  document.getElementById('tvNds').textContent  = path.length;
-  document.getElementById('srcNm').textContent  = srcName || 'Node ' + srcId;
-  document.getElementById('dstNm').textContent  = dstName || 'Node ' + dstId;
-  document.getElementById('algSt').textContent  = 'RUNNING';
+  document.getElementById('tvNds').textContent = path.length;
+  document.getElementById('srcNm').textContent = srcName || 'Node ' + srcId;
+  document.getElementById('dstNm').textContent = dstName || 'Node ' + dstId;
+  document.getElementById('algSt').textContent = 'RUNNING';
   document.getElementById('algVis').textContent = visited.length;
   document.getElementById('algLen').textContent = path.length;
   document.getElementById('algDst').textContent = cost < Infinity ? Math.round(cost) + 'u' : 'N/A';
-  document.getElementById('tvSt').textContent   = 'ACTIVE';
-  document.getElementById('tvSt').style.color   = '#0f0';
+  document.getElementById('tvSt').textContent = 'ACTIVE';
+  document.getElementById('tvSt').style.color = '#0f0';
   document.getElementById('stPath').textContent = `Rute: ${srcName} → ${dstName}`;
 
   const nl = document.getElementById('nList');
@@ -301,4 +301,112 @@ function setRoute(srcId, dstId, srcName, dstName) {
     document.getElementById('pBar').style.width = (pathAnimT * 100) + '%';
     if (pathAnimT >= 1) clearInterval(iv);
   }, 28);
+}
+
+// ============================================================
+//  Animation.js — Tugas Septia Dwi Ananta (2401020074)
+//  Animasi pergerakan kendaraan (Player, NPC, InitNPC, MovecarAlongPath, dan UpdateAnimation)
+// ============================================================
+'use strict';
+
+// ============================================================
+//  PLAYER CAR
+// ============================================================
+let playerCar = {
+  x: 200, y: 200, angle: 0,
+  path: [], pathIdx: 0, t: 0,
+  speed: 5,
+  destNodeId: null,
+  trail: [],
+  color: '#00dd88'
+};
+
+function moveCarAlongPath(car) {
+  if (!car.path || car.path.length < 2) return;
+  if (car.pathIdx >= car.path.length - 1) {
+    if (car !== playerCar) {
+      const ns = car.path[car.path.length - 1];
+      let nd = Math.floor(Math.random() * nodes.length);
+      for (let _ = 0; _ < 10 && nd === ns; _++) nd = Math.floor(Math.random() * nodes.length);
+      const { path } = dijkstra(ns, nd);
+      if (path.length > 1) { car.path = path; car.pathIdx = 0; car.t = 0; }
+    }
+    return;
+  }
+  let na = nodes[car.path[car.pathIdx]];
+  let nb = nodes[car.path[car.pathIdx + 1]];
+  if (!na || !nb) return;
+  let dx = nb.x - na.x, dy = nb.y - na.y;
+  let segLen = Math.sqrt(dx * dx + dy * dy);
+  if (segLen < 1) { car.pathIdx++; return; }
+  car.t += car.speed / segLen;
+  if (car.t >= 1) { car.t = 0; car.pathIdx++; return; }
+  car.x = na.x + dx * car.t;
+  car.y = na.y + dy * car.t;
+  car.angle = Math.atan2(dy, dx);
+  if (car === playerCar) {
+    car.trail.push({ x: car.x, y: car.y });
+    if (car.trail.length > 26) car.trail.shift();
+  }
+}
+
+// ============================================================
+//  NPC CARS
+// ============================================================
+let npcCars = [];
+const NPC_COLORS = ['#ff5555', '#ffdd22', '#44ee77', '#4488ff', '#ff55bb', '#ff9933', '#aa55ff', '#55ddff'];
+const NPC_NAMES = ['Syhara', 'Septi', 'Nurpaisyah', 'Rydoi', 'Ama', 'Syhara', 'Septi', 'Nurpaisyah'];
+const NPC_ICONS = ['🚗', '🚕', '🚙', '🚌', '🏎️', '🚐', '🚑', '🚓'];
+
+function initNPCs() {
+  npcCars = [];
+  for (let i = 0; i < 8; i++) {
+    const s = Math.floor(sr(i * 17) * nodes.length);
+    let d = Math.floor(sr(i * 31 + 5) * nodes.length);
+    for (let _ = 0; _ < 10 && d === s; _++) d = Math.floor(Math.random() * nodes.length);
+    const { path } = dijkstra(s, d);
+    const sn = nodes[s]; if (!sn) continue;
+    npcCars.push({
+      x: sn.x, y: sn.y, angle: 0,
+      path, pathIdx: 0, t: 0,
+      speed: 0.9 + sr(i * 47) * 1.1,
+      color: NPC_COLORS[i],
+      name: NPC_NAMES[i],
+      icon: NPC_ICONS[i],
+    });
+  }
+  buildNPCPanel();
+}
+// ============================================================
+//  UPDATE
+// ============================================================
+let frameCount = 0;
+function update() {
+  if (paused) return;
+  frameCount++;
+  moveCarAlongPath(playerCar);
+  if (playerCar.path.length >= 2 && playerCar.pathIdx >= playerCar.path.length - 1 && playerCar.t === 0) {
+    document.getElementById('algSt').textContent = 'ARRIVED';
+    document.getElementById('tvSt').textContent = 'DONE';
+    document.getElementById('tvSt').style.color = '#ffd700';
+  }
+  // npcCars.forEach(moveCarAlongPath);
+  if (followCar) {
+    cam.x += (playerCar.x - cam.x) * .08;
+    cam.y += (playerCar.y - cam.y) * .08;
+  }
+  document.getElementById('tvSpd').textContent = Math.round(32 + Math.sin(Date.now() * .0012) * 14) + ' km/h';
+  document.getElementById('tvZm').textContent = cam.zoom.toFixed(2) + '×';
+  document.querySelectorAll('.nChip').forEach((c, i) => {
+    c.classList.remove('cur', 'vis');
+    if (i < playerCar.pathIdx) c.classList.add('vis');
+    else if (i === playerCar.pathIdx) c.classList.add('cur');
+  });
+  if (frameCount % 35 === 0) {
+    npcCars.forEach((c, i) => {
+      const el = document.getElementById('nr' + i); if (!el) return;
+      const nd = c.path && c.path.length ? nodes[c.path[c.path.length - 1]] : null;
+      el.textContent = nd ? `→ Node ${nd.id}` : 'Routing…';
+    });
+  }
 }
