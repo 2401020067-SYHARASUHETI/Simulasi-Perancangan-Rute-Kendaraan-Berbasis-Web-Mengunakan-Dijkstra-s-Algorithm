@@ -124,6 +124,12 @@ git clone https://github.com/<username>/Simulasi-Perancangan-Rute-Kendaraan-Berb
 - Viewport indicator menunjukkan area peta yang sedang dilihat
 
 ---
+### 🎲 Fitur Randomisasi Simulasi
+- 🎯 **Acak Posisi Start & Tujuan** → Menentukan titik awal dan tujuan secara otomatis untuk menghasilkan rute baru setiap simulasi.
+- 🚗 **Random NPC Spawn** → Posisi kendaraan NPC berubah setiap kali aplikasi dijalankan.
+- 🔄 **Random Route Generator** → Menghasilkan jalur pencarian baru tanpa perlu memilih lokasi secara manual.
+- 🌟 **Challenge Mode** → Pengguna dapat mencoba menebak jalur terpendek sebelum algoritma Dijkstra menghitung hasilnya.
+- 🗺️ **Dynamic Simulation** → Setiap percobaan menghasilkan pengalaman navigasi yang berbeda sehingga lebih menarik untuk pembelajaran algoritma graf.
 
 ## 🧮 Cara Kerja Algoritma Dijkstra
 
