@@ -86,7 +86,52 @@ git clone https://github.com/<username>/Simulasi-Perancangan-Rute-Kendaraan-Berb
 | **HTML5 Canvas API** | Rendering peta 2D, gedung, jalan, kendaraan, minimap |
 
 ---
+## 🧮 Algoritma dan Komponen Sistem yang Diimplementasikan
 
+| Algoritma / Komponen | Fungsi | Kontributor |
+|----------------------|---------|-------------|
+| 🔍 Dijkstra's Algorithm | Menentukan jalur terpendek antar node pada graf berbobot | Syhara Suheti |
+| 🗺️ Graph Builder | Membangun struktur graf (nodes, edges, adjacency list) | Syhara Suheti |
+| 📍 Closest Node Search | Menentukan node terdekat dari posisi klik pengguna | Syhara Suheti |
+| 🚦 Route Generator | Menetapkan dan menghitung rute kendaraan | Syhara Suheti |
+| 🎨 User Interface System | Panel navigasi, tombol lokasi, statistik simulasi | Rydhoi Trimaniel Lase |
+| 🚗 NPC Vehicle System | Inisialisasi kendaraan NPC dan rute otomatis | Septi Dwi Anata |
+| 🎞️ Vehicle Animation Engine | Animasi kendaraan mengikuti jalur hasil Dijkstra | Septi Dwi Anata |
+| 🎮 Camera & Interaction System | Zoom, pan, follow camera, pause/resume simulasi | Gelia Rahma Nur Minda |
+| 🎲 Random Route Feature | Pengacakan titik awal dan tujuan simulasi | Gelia Rahma Nur Minda |
+| 🏙️ Canvas Rendering Engine | Rendering jalan, bangunan, landmark, dan objek kota | Nurpaisyah |
+| 🌳 Smart City Object Generator | Pembuatan objek kota virtual | Nurpaisyah |
+| 🔄 Main Render Loop | Sinkronisasi dan pembaruan tampilan sistem | Nurpaisyah |
+
+---
+
+## 📂 Struktur Pembagian File
+
+| File | Anggota | Isi |
+|------|----------|-----|
+| `dijkstra.js` | Syhara Suheti | Struktur graf (*nodes, edges, addNode(), addEdge(), buildGraph()*), implementasi algoritma Dijkstra, helper *closestNode()* dan *setRoute()* |
+| `ui.js` | Rydhoi Trimaniel Lase | Array LOCS, *buildLocBtns()*, *buildNPCPanel()*, *updateUI()* dan seluruh komponen antarmuka pengguna |
+| `animation.js` | Septi Dwi Anata | *playerCar*, *npcCars*, *initNPCs()*, *moveCarAlongPath()*, *updateAnimation()* dan sistem animasi kendaraan |
+| `interaction.js` | Gelia Rahma Nur Minda | Variabel kamera (*cam*, *WORLD*), event mouse/touch, zoom, follow camera, pause/resume, dan fitur acak posisi |
+| `render.js` | Nurpaisyah | *Canvas setup*, *buildCityObjects()*, seluruh fungsi *draw()*, *renderLoop()*, dan inisialisasi sistem |
+---
+
+## 🔗 Dependensi Antar File
+
+```html
+<script src="dijkstra.js"></script>
+<script src="ui.js"></script>
+<script src="animation.js"></script>
+<script src="interaction.js"></script>
+<script src="render.js"></script>
+```
+
+### 📌 Keterangan
+- `dijkstra.js` harus dimuat terlebih dahulu karena berisi struktur graf dan algoritma utama.
+- `ui.js` menggunakan data lokasi dan rute dari `dijkstra.js`.
+- `animation.js` membutuhkan data rute untuk menggerakkan kendaraan.
+- `interaction.js` menghubungkan input pengguna dengan sistem navigasi.
+- `render.js` harus dipanggil terakhir karena bergantung pada seluruh modul sebelumnya.
 ## ⚙️ Fitur Sistem
 
 ### 🗺️ Peta Kota Virtual (Smart City KOTMOR)
