@@ -1,7 +1,16 @@
 # 🏙️ Simulasi Pencarian Rute Kendaraan Berbasis Web Menggunakan Dijkstra's Algorithm
 
-> **Projek Akhir Mata Kuliah — Universitas Maritim Raja Ali Haji (UMRAH)**  
-> Prodi Teknik Informatika, Fakultas Teknik dan Teknologi Kemaritiman
+<div align="center">
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+**Projek Akhir Mata Kuliah | Teknik Informatika**  
+Universitas Maritim Raja Ali Haji (UMRAH)  
+Fakultas Teknik dan Teknologi Kemaritiman
+
+</div>
 
 ---
 
