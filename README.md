@@ -204,7 +204,7 @@ function dijkstra(src, dst) {
 
 | Item | Detail |
 |---|---|
-| Mata Kuliah | Algoritma & Pemrograman / Grafika Komputer |
+| Mata Kuliah | Perancangan Analisis Algoritma  |
 | Institusi | Universitas Maritim Raja Ali Haji (UMRAH) |
 | Prodi | Teknik Informatika |
 | Semester | Genap 2025/2026 |
