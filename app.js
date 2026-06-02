@@ -410,3 +410,247 @@ function update() {
     });
   }
 }
+// ============================================================
+// PLAYER CAR + NPC + GAME LOOP
+// Tugas: Mobil Player + NPC + Game Loop
+// ============================================================
+
+let playerCar = {
+  x: 200,
+  y: 200,
+  angle: 0,
+  path: [],
+  pathIdx: 0,
+  t: 0,
+  speed: 5,
+  destNodeId: null,
+  trail: [],
+  color: '#00dd88'
+};
+
+function moveCarAlongPath(car) {
+  if (!car.path || car.path.length < 2) return;
+
+  if (car.pathIdx >= car.path.length - 1) {
+    if (car !== playerCar) {
+      const ns = car.path[car.path.length - 1];
+
+      let nd = Math.floor(Math.random() * nodes.length);
+
+      for (let _ = 0; _ < 10 && nd === ns; _++) {
+        nd = Math.floor(Math.random() * nodes.length);
+      }
+
+      const { path } = dijkstra(ns, nd);
+
+      if (path.length > 1) {
+        car.path = path;
+        car.pathIdx = 0;
+        car.t = 0;
+      }
+    }
+    return;
+  }
+
+  let na = nodes[car.path[car.pathIdx]];
+  let nb = nodes[car.path[car.pathIdx + 1]];
+
+  if (!na || !nb) return;
+
+  let dx = nb.x - na.x;
+  let dy = nb.y - na.y;
+
+  let segLen = Math.sqrt(dx * dx + dy * dy);
+
+  if (segLen < 1) {
+    car.pathIdx++;
+    return;
+  }
+
+  car.t += car.speed / segLen;
+
+  if (car.t >= 1) {
+    car.t = 0;
+    car.pathIdx++;
+    return;
+  }
+
+  car.x = na.x + dx * car.t;
+  car.y = na.y + dy * car.t;
+
+  car.angle = Math.atan2(dy, dx);
+
+  if (car === playerCar) {
+    car.trail.push({
+      x: car.x,
+      y: car.y
+    });
+
+    if (car.trail.length > 26) {
+      car.trail.shift();
+    }
+  }
+}
+
+function carRRect(x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+
+  ctx.closePath();
+}
+
+function drawCar(car, isPlayer) {
+  const L = isPlayer ? 52 : 40;
+  const WW = isPlayer ? 28 : 22;
+
+  ctx.save();
+
+  ctx.translate(car.x, car.y);
+  ctx.rotate(car.angle);
+
+  const col = isPlayer ? '#00dd88' : car.color;
+
+  ctx.fillStyle = 'rgba(0,0,0,.35)';
+  ctx.beginPath();
+  ctx.ellipse(4, 6, L * .45, WW * .42, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = col;
+  carRRect(-L / 2, -WW / 2, L, WW, WW * .3);
+  ctx.fill();
+
+  ctx.restore();
+
+  if (isPlayer && car.trail && car.trail.length > 1) {
+    for (let i = 1; i < car.trail.length; i++) {
+      const pt = i / car.trail.length;
+
+      ctx.strokeStyle = `rgba(0,220,130,${pt * .32})`;
+      ctx.lineWidth = 10 * pt;
+
+      ctx.beginPath();
+      ctx.moveTo(car.trail[i - 1].x, car.trail[i - 1].y);
+      ctx.lineTo(car.trail[i].x, car.trail[i].y);
+      ctx.stroke();
+    }
+  }
+}
+
+let npcCars = [];
+
+const NPC_COLORS = [
+  '#ff5555',
+  '#ffdd22',
+  '#44ee77',
+  '#4488ff',
+  '#ff55bb',
+  '#ff9933',
+  '#aa55ff',
+  '#55ddff'
+];
+
+const NPC_NAMES = [
+  'Syhara',
+  'Septi',
+  'Nurpaisyah',
+  'Rydoi',
+  'Ama',
+  'Syhara',
+  'Septi',
+  'Nurpaisyah'
+];
+
+const NPC_ICONS = [
+  '🚗',
+  '🚕',
+  '🚙',
+  '🚌',
+  '🏎️',
+  '🚐',
+  '🚑',
+  '🚓'
+];
+
+function initNPCs() {
+  npcCars = [];
+
+  for (let i = 0; i < 8; i++) {
+
+    const s = Math.floor(sr(i * 17) * nodes.length);
+
+    let d = Math.floor(sr(i * 31 + 5) * nodes.length);
+
+    for (let _ = 0; _ < 10 && d === s; _++) {
+      d = Math.floor(Math.random() * nodes.length);
+    }
+
+    const { path } = dijkstra(s, d);
+
+    const sn = nodes[s];
+
+    if (!sn) continue;
+
+    npcCars.push({
+      x: sn.x,
+      y: sn.y,
+      angle: 0,
+      path,
+      pathIdx: 0,
+      t: 0,
+      speed: 0.9 + sr(i * 47) * 1.1,
+      color: NPC_COLORS[i],
+      name: NPC_NAMES[i],
+      icon: NPC_ICONS[i]
+    });
+  }
+
+  buildNPCPanel();
+}
+
+let frameCount = 0;
+
+function update() {
+
+  if (paused) return;
+
+  frameCount++;
+
+  moveCarAlongPath(playerCar);
+
+  npcCars.forEach(moveCarAlongPath);
+
+  if (
+    playerCar.path.length >= 2 &&
+    playerCar.pathIdx >= playerCar.path.length - 1 &&
+    playerCar.t === 0
+  ) {
+    document.getElementById('algSt').textContent = 'ARRIVED';
+    document.getElementById('tvSt').textContent = 'DONE';
+    document.getElementById('tvSt').style.color = '#ffd700';
+  }
+
+  if (followCar) {
+    cam.x += (playerCar.x - cam.x) * 0.08;
+    cam.y += (playerCar.y - cam.y) * 0.08;
+  }
+}
+
+function loop() {
+  update();
+  render();
+  requestAnimationFrame(loop);
+}
